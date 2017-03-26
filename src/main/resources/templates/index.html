@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
+<head>
+    <title>Template Action</title>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        $(function(){
+            console.log('Bienvenido a '+/*[[#{app.title}]]*/ 'Spring?');
+        })
+        /*]]>*/
+    </script>
+</head>
+<body>
+    <!-- /* Content of this page will be decorated by the elements of layouts/default.html (layouts/default) */ -->
+    <div layout:fragment="content">
+        <div class="jumbotron">
+            <h1>Welcome to <th:block th:text="#{app.title}">Spring Boot</th:block></h1>
+            <p>Now is: <b th:text="${execInfo.now.time}">date and time</b></p>
+            <a href="#" th:href="@{/api/users}" target="_blank" class="btn btn-success">Rest Test</a>
+        </div>
+        <table class="table" th:if="${not #lists.isEmpty(users)}">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NAMES</th>
+                    <th>EMAIL</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}" th:class="${userStat.odd}? 'odd'">
+                    <td th:text="${user.id}">100</td>
+                    <td th:text="${user.fullname}">Pepito palotes</td>
+                    <td th:text="${user.email}">ppalotes@tecsup.edu.pe</td>
+                    <td><a href="detail.html" th:href="@{/users/detail(id=${user.id},foo=bar)}" class="btn btn-primary">GO</a></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">Total: <span th:text="${#lists.size(users)}">1</span></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</body>
+</html>
